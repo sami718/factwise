@@ -1,108 +1,83 @@
-import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import React, {useState} from 'react';
+import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import Collapsible from './src/components/Collapsible';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}: any) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+import celebrities from './src/mockData/celebrities';
+import DeleteBox from './src/components/DeleteBox';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [celebritiesData, setCelebritiesData] = useState<any>(celebrities);
+  const [modalVisible, setModalVisible] = useState({
+    isModalVisible: false,
+    selectedCeleb: null,
+  });
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const deleteCelebrities = () => {
+    let index = celebrities.findIndex(
+      (celebrity: any) => celebrity.id === modalVisible.selectedCeleb.id,
+    );
+    celebritiesData.splice(index, 1);
+    setCelebritiesData([...celebritiesData]);
+    setModalVisible({isModalVisible: false, selectedCeleb: null});
+    Toast.show({
+      type: 'success',
+      text1: 'Celebrity Details Deleted Successfully!',
+      position: 'bottom',
+    });
   };
 
+  const EditCelebrities = (updatedCelebrityValue: any) => {
+    let index = celebrities.findIndex(
+      (celebrity: any) => celebrity.id === updatedCelebrityValue.id,
+    );
+    celebritiesData[index] = updatedCelebrityValue;
+    setCelebritiesData([...celebritiesData]);
+    Toast.show({
+      type: 'success',
+      text1: 'Celebrity Details Updated Successfully!',
+      position: 'bottom',
+    });
+  };
+
+  const renderItem = ({item}: any) => (
+    <Collapsible
+      item={item}
+      setModalVisible={(value: boolean) =>
+        setModalVisible({isModalVisible: value, selectedCeleb: item})
+      }
+      EditCelebrities={(updatedValue: any) => EditCelebrities(updatedValue)}
+    />
+  );
+
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
+    <SafeAreaView style={styles.sectionContainer}>
+      <FlatList
+        data={celebritiesData}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        contentContainerStyle={styles.listView}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <DeleteBox
+        modalVisible={modalVisible.isModalVisible}
+        deleteCelebrities={() => deleteCelebrities()}
+        setModalVisible={() =>
+          setModalVisible({
+            isModalVisible: false,
+            selectedCeleb: null,
+          })
+        }
+      />
+      <Toast />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    marginVertical: 32,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+  listView: {paddingHorizontal: 20},
 });
 
 export default App;
