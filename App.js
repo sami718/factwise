@@ -1,117 +1,69 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
+const react_native_1 = require("react-native");
+const NewAppScreen_1 = require("react-native/Libraries/NewAppScreen");
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+const Section = ({ children, title }) => {
+    const a = 'sam';
+    const isDarkMode = (0, react_native_1.useColorScheme)() === 'dark';
+    return (react_1.default.createElement(react_native_1.View, { style: styles.sectionContainer },
+        react_1.default.createElement(react_native_1.Text, { style: [
+                styles.sectionTitle,
+                {
+                    color: isDarkMode ? NewAppScreen_1.Colors.white : NewAppScreen_1.Colors.black,
+                },
+            ] }, title),
+        react_1.default.createElement(react_native_1.Text, { style: [
+                styles.sectionDescription,
+                {
+                    color: isDarkMode ? NewAppScreen_1.Colors.light : NewAppScreen_1.Colors.dark,
+                },
+            ] }, children)));
 };
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+const App = () => {
+    const isDarkMode = (0, react_native_1.useColorScheme)() === 'dark';
+    const backgroundStyle = {
+        backgroundColor: isDarkMode ? NewAppScreen_1.Colors.darker : NewAppScreen_1.Colors.lighter,
+    };
+    return (react_1.default.createElement(react_native_1.SafeAreaView, { style: backgroundStyle },
+        react_1.default.createElement(react_native_1.StatusBar, { barStyle: isDarkMode ? 'light-content' : 'dark-content', backgroundColor: backgroundStyle.backgroundColor }),
+        react_1.default.createElement(react_native_1.ScrollView, { contentInsetAdjustmentBehavior: "automatic", style: backgroundStyle },
+            react_1.default.createElement(NewAppScreen_1.Header, null),
+            react_1.default.createElement(react_native_1.View, { style: {
+                    backgroundColor: isDarkMode ? NewAppScreen_1.Colors.black : NewAppScreen_1.Colors.white,
+                } },
+                react_1.default.createElement(Section, { title: "Step One" },
+                    "Edit ",
+                    react_1.default.createElement(react_native_1.Text, { style: styles.highlight }, "App.js"),
+                    " to change this screen and then come back to see your edits."),
+                react_1.default.createElement(Section, { title: "See Your Changes" },
+                    react_1.default.createElement(NewAppScreen_1.ReloadInstructions, null)),
+                react_1.default.createElement(Section, { title: "Debug" },
+                    react_1.default.createElement(NewAppScreen_1.DebugInstructions, null)),
+                react_1.default.createElement(Section, { title: "Learn More" }, "Read the docs to discover what to do next:"),
+                react_1.default.createElement(NewAppScreen_1.LearnMoreLinks, null)))));
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+const styles = react_native_1.StyleSheet.create({
+    sectionContainer: {
+        marginTop: 32,
+        paddingHorizontal: 24,
+    },
+    sectionTitle: {
+        fontSize: 24,
+        fontWeight: '600',
+    },
+    sectionDescription: {
+        marginTop: 8,
+        fontSize: 18,
+        fontWeight: '400',
+    },
+    highlight: {
+        fontWeight: '700',
+    },
 });
-
-export default App;
+exports.default = App;
