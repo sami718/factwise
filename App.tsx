@@ -1,5 +1,11 @@
 import React, {useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet} from 'react-native';
+import {
+  FlatList,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import Collapsible from './src/components/Collapsible';
 
 import celebrities from './src/mockData/celebrities';
@@ -8,6 +14,7 @@ import Toast from 'react-native-toast-message';
 
 const App = () => {
   const [celebritiesData, setCelebritiesData] = useState<any>(celebrities);
+  const [searchText, setSearchText] = useState<string>('');
   const [modalVisible, setModalVisible] = useState({
     isModalVisible: false,
     selectedCeleb: null,
@@ -40,18 +47,34 @@ const App = () => {
     });
   };
 
-  const renderItem = ({item}: any) => (
-    <Collapsible
-      item={item}
-      setModalVisible={(value: boolean) =>
-        setModalVisible({isModalVisible: value, selectedCeleb: item})
-      }
-      EditCelebrities={(updatedValue: any) => EditCelebrities(updatedValue)}
-    />
-  );
+  const renderItem = ({item}: any) => {
+    if (
+      item.first.toLocaleLowerCase().includes(searchText.toLocaleLowerCase()) ||
+      item.last.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+    ) {
+      return (
+        <Collapsible
+          item={item}
+          setModalVisible={(value: boolean) =>
+            setModalVisible({isModalVisible: value, selectedCeleb: item})
+          }
+          EditCelebrities={(updatedValue: any) => EditCelebrities(updatedValue)}
+        />
+      );
+    }
+    return <></>;
+  };
 
   return (
     <SafeAreaView style={styles.sectionContainer}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          placeholder="Search user by first name or last name"
+          style={styles.textarea}
+          onChangeText={setSearchText}
+          value={searchText}
+        />
+      </View>
       <FlatList
         data={celebritiesData}
         renderItem={renderItem}
@@ -78,6 +101,19 @@ const styles = StyleSheet.create({
     marginVertical: 32,
   },
   listView: {paddingHorizontal: 20},
+  searchContainer: {
+    flexDirection: 'row',
+    width: '90%',
+    height: 30,
+    margin: 20,
+    marginBottom: 0,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: 10,
+  },
+  textarea: {
+    width: '90%',
+    paddingHorizontal: 20,
+  },
 });
 
 export default App;
