@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import {getAge} from '../utils/GlobalFunctions';
 
 const CelebDetails = ({item}: any) => {
   return (
@@ -7,7 +8,10 @@ const CelebDetails = ({item}: any) => {
       <View style={styles.screenArea}>
         <View>
           <Text style={styles.label}>Age</Text>
-          <Text style={styles.value}>{item.dob + ' years'}</Text>
+          <Text style={styles.value}>
+            {item.age || getAge(item.dob)}
+            {' years'}
+          </Text>
         </View>
         <View>
           <Text style={styles.label}>Gender</Text>

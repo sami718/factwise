@@ -1422,7 +1422,15 @@
   "resolved" "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.5.tgz"
   "version" "15.7.5"
 
-"@types/react-native@^0.70.7":
+"@types/react-native-vector-icons@^6.4.12":
+  "integrity" "sha512-gSXtv3NMOsRwSXJ/gvGebm7CNjHbkeFKCse9h/Pvi+x2yjCLOkJR1FBfec06DhaFJpsK7Y8WRQpwOS0eLqx5Rg=="
+  "resolved" "https://registry.npmjs.org/@types/react-native-vector-icons/-/react-native-vector-icons-6.4.12.tgz"
+  "version" "6.4.12"
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
+"@types/react-native@*", "@types/react-native@^0.70.7":
   "integrity" "sha512-hBzeUWwk8sfj3vDfwEXb4hbjWjl0jb5CvWlu2gLrOUJyFHVzJ+x6Y9ilO2eVtJW7l5QmmNLILE1PkVfKRkqYuQ=="
   "resolved" "https://registry.npmjs.org/@types/react-native/-/react-native-0.70.7.tgz"
   "version" "0.70.7"
@@ -5848,6 +5856,11 @@
   "integrity" "sha512-H7aRhhSHYvl5v+Ufy5CtXhaRHgrRQakWn+IexSFCP/+nUFu5yvwfmtbVEfIszMjr6szPuiabG15trrbswHlmCw=="
   "resolved" "https://registry.npmjs.org/react-native-dropdown-select-list/-/react-native-dropdown-select-list-2.0.4.tgz"
   "version" "2.0.4"
+
+"react-native-element-dropdown@^2.5.0":
+  "integrity" "sha512-ZlatJ2X0/iR+rgZ9Mcp5KO9JvL9fAI/ZGnbdo07wY0CeqVMxAnAGyj2INEqtwkd81bEHVmWDlhpFgy0xhX6qNQ=="
+  "resolved" "https://registry.npmjs.org/react-native-element-dropdown/-/react-native-element-dropdown-2.5.0.tgz"
+  "version" "2.5.0"
 
 "react-native-gradle-plugin@^0.70.3":
   "integrity" "sha512-oOanj84fJEXUg9FoEAQomA8ISG+DVIrTZ3qF7m69VQUJyOGYyDZmPqKcjvRku4KXlEH6hWO9i4ACLzNBh8gC0A=="

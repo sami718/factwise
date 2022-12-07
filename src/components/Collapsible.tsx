@@ -7,7 +7,11 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
+
+import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/EvilIcons';
+
+import {getAge} from '../utils/GlobalFunctions';
 import CelebDetails from './CelebDetails';
 import EditDetails from './EditDetails';
 
@@ -75,7 +79,19 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.eventClick}
-                onPress={() => setEditValue(true)}>
+                onPress={() => {
+                  if (
+                    item.age ? Number(item.age) > 18 : getAge(item.dob) > 18
+                  ) {
+                    setEditValue(true);
+                  } else {
+                    Toast.show({
+                      type: 'info',
+                      text1: 'Cannot perform the action',
+                      position: 'bottom',
+                    });
+                  }
+                }}>
                 <Icon name="pencil" size={30} color="#4F8EF7" />
               </TouchableOpacity>
             </View>

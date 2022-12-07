@@ -1,19 +1,20 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
-import {SelectList} from 'react-native-dropdown-select-list';
-import {getAge} from '../utils/GlobalFunctions';
 import Icon from 'react-native-vector-icons/Octicons';
+import {Dropdown} from 'react-native-element-dropdown';
+import {getAge} from '../utils/GlobalFunctions';
 
 const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
   const [celebToUpdate, setCelebritydata] = useState({
     ...item,
-    dob: getAge(item.dob),
+    age: item.age || getAge(item.dob),
   });
 
   const data = [
-    {key: '1', value: 'Male'},
-    {key: '2', value: 'Female'},
-    {key: '3', value: 'Transgender'},
+    {label: 'Male', value: 'male'},
+    {label: 'Female', value: 'female'},
+    {label: 'Transgender', value: 'Transgender'},
+    {label: 'Rather not say', value: 'Rather not say'},
   ];
 
   return (
@@ -22,27 +23,27 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
         <View>
           <Text style={styles.label}>Age</Text>
           <TextInput
+            keyboardType={'numeric'}
             style={styles.country}
-            onChangeText={val => setCelebritydata({...celebToUpdate, dob: val})}
-            value={String(celebToUpdate.dob)}
+            maxLength={3}
+            onChangeText={val => setCelebritydata({...celebToUpdate, age: val})}
+            value={String(celebToUpdate.age)}
           />
         </View>
         <View>
           <Text style={styles.label}>Gender</Text>
-          <SelectList
-            search={false}
-            setSelected={(val: any) =>
-              setCelebritydata({...celebToUpdate, gender: val})
-            }
+          <Dropdown
+            style={styles.dropdown}
+            containerStyle={styles.dropdownContainer}
+            itemTextStyle={styles.dropdownText}
             data={data}
-            save="value"
-            defaultOption={
-              celebToUpdate.gender === 'male'
-                ? data[0]
-                : celebToUpdate.gender === 'female'
-                ? data[1]
-                : data[3]
-            }
+            search={false}
+            labelField="label"
+            valueField="value"
+            value={celebToUpdate.gender}
+            onChange={val => {
+              setCelebritydata({...celebToUpdate, gender: val.value});
+            }}
           />
         </View>
         <View>
@@ -94,6 +95,17 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
 };
 
 const styles = StyleSheet.create({
+  dropdown: {
+    marginTop: 6,
+    height: 30,
+    width: 100,
+    borderColor: 'gray',
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  dropdownContainer: {width: 130, marginLeft: -10},
+  dropdownText: {fontSize: 14},
   screenArea: {
     flexDirection: 'row',
     justifyContent: 'space-between',

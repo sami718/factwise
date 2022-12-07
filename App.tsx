@@ -21,6 +21,15 @@ const App = () => {
     selectedCeleb: null,
   });
 
+  const showToast = (message: string, type?: string) => {
+    Toast.show({
+      type: type || 'success',
+      text1: message,
+      position: 'bottom',
+      visibilityTime: 1500,
+    });
+  };
+
   const deleteCelebrities = () => {
     let index = celebrities.findIndex(
       (celebrity: any) => celebrity.id === modalVisible.selectedCeleb.id,
@@ -28,11 +37,7 @@ const App = () => {
     celebritiesData.splice(index, 1);
     setCelebritiesData([...celebritiesData]);
     setModalVisible({isModalVisible: false, selectedCeleb: null});
-    Toast.show({
-      type: 'success',
-      text1: 'Celebrity Details Deleted Successfully!',
-      position: 'bottom',
-    });
+    showToast('Celebrity Details Deleted Successfully!');
   };
 
   const EditCelebrities = (updatedCelebrityValue: any) => {
@@ -41,11 +46,7 @@ const App = () => {
     );
     celebritiesData[index] = updatedCelebrityValue;
     setCelebritiesData([...celebritiesData]);
-    Toast.show({
-      type: 'success',
-      text1: 'Celebrity Details Updated Successfully!',
-      position: 'bottom',
-    });
+    showToast('Celebrity Details Updated Successfully!');
   };
 
   const renderItem = ({item}: any) => {
