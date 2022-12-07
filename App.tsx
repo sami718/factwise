@@ -31,7 +31,7 @@ const App = () => {
   };
 
   const deleteCelebrities = () => {
-    let index = celebrities.findIndex(
+    let index = celebritiesData.findIndex(
       (celebrity: any) => celebrity.id === modalVisible.selectedCeleb.id,
     );
     celebritiesData.splice(index, 1);
