@@ -7,7 +7,7 @@ const CelebDetails = ({item}: any) => {
       <View style={styles.screenArea}>
         <View>
           <Text style={styles.label}>Age</Text>
-          <Text style={styles.value}>{item.dob}</Text>
+          <Text style={styles.value}>{item.dob + ' years'}</Text>
         </View>
         <View>
           <Text style={styles.label}>Gender</Text>
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   },
   label: {fontSize: 14, color: '#36454F'},
   value: {fontSize: 16},
-  desc: {fontSize: 16, color: '#36454F', marginTop: 5},
+  desc: {fontSize: 15, color: '#36454F', marginTop: 5, marginBottom: 5},
 });
 
 export default CelebDetails;

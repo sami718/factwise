@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
 import {SelectList} from 'react-native-dropdown-select-list';
 import {getAge} from '../utils/GlobalFunctions';
+import Icon from 'react-native-vector-icons/Octicons';
 
 const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
   const [celebToUpdate, setCelebritydata] = useState({
@@ -73,9 +74,7 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
             {marginRight: 15},
           ]}
           onPress={() => setEditValue(false)}>
-          <View>
-            <Text>X</Text>
-          </View>
+          <Icon name="x" size={16} color="red" />
         </Pressable>
         <Pressable
           style={({pressed}) => [
@@ -87,9 +86,7 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
             EditCelebrities(celebToUpdate);
             setEditValue(false);
           }}>
-          <View>
-            <Text>C</Text>
-          </View>
+          <Icon name="check" size={16} color="green" />
         </Pressable>
       </View>
     </>
@@ -124,7 +121,7 @@ const styles = StyleSheet.create({
   operations: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 7,
+    marginTop: 17,
   },
   clickButton: {
     width: 20,
@@ -132,6 +129,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     borderWidth: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 25,
   },
 });

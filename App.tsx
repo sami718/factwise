@@ -11,6 +11,7 @@ import Collapsible from './src/components/Collapsible';
 import celebrities from './src/mockData/celebrities';
 import DeleteBox from './src/components/DeleteBox';
 import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/EvilIcons';
 
 const App = () => {
   const [celebritiesData, setCelebritiesData] = useState<any>(celebrities);
@@ -19,6 +20,7 @@ const App = () => {
     isModalVisible: false,
     selectedCeleb: null,
   });
+  // Icon.loadFont().then();
 
   const deleteCelebrities = () => {
     let index = celebrities.findIndex(
@@ -68,6 +70,12 @@ const App = () => {
   return (
     <SafeAreaView style={styles.sectionContainer}>
       <View style={styles.searchContainer}>
+        <Icon
+          name="search"
+          style={styles.searchIcon}
+          size={20}
+          color={'black'}
+        />
         <TextInput
           placeholder="Search user by first name or last name"
           style={styles.textarea}
@@ -106,14 +114,16 @@ const styles = StyleSheet.create({
     width: '90%',
     height: 30,
     margin: 20,
-    marginBottom: 0,
+    marginBottom: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 10,
   },
   textarea: {
     width: '90%',
     paddingHorizontal: 20,
+    paddingLeft: 5,
   },
+  searchIcon: {alignSelf: 'center', marginLeft: 10},
 });
 
 export default App;

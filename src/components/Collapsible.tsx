@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Animated,
 } from 'react-native';
-// import Icon from 'react-native-vector-icons/EvilIcons';
+import Icon from 'react-native-vector-icons/EvilIcons';
 import CelebDetails from './CelebDetails';
 import EditDetails from './EditDetails';
 
@@ -41,14 +41,18 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
           style={styles.iconClick}
           onPress={() => {
             if (!isExpanded) {
-              setAnimation(new Animated.Value(300));
+              setAnimation(new Animated.Value(320));
               setExpandValue(!isExpanded);
             } else {
               setAnimation(new Animated.Value(65));
               setExpandValue(!isExpanded);
             }
           }}>
-          <Text>{isExpanded ? '>' : '<'}</Text>
+          <Icon
+            name={isExpanded ? 'chevron-up' : 'chevron-down'}
+            size={35}
+            color={'black'}
+          />
         </TouchableOpacity>
       </View>
       {isExpanded && (
@@ -65,15 +69,14 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
           {!isEditing && (
             <View style={styles.operations}>
               <TouchableOpacity
-                style={styles.eventClick}
+                style={[styles.eventClick, styles.delete]}
                 onPress={() => setModalVisible(true)}>
-                <Text>D</Text>
-                {/* <Icon name="arrow-down" color="#4F8EF7" /> */}
+                <Icon name="trash" size={30} color="red" />
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.eventClick}
                 onPress={() => setEditValue(true)}>
-                <Text>E</Text>
+                <Icon name="pencil" size={30} color="#4F8EF7" />
               </TouchableOpacity>
             </View>
           )}
@@ -98,7 +101,6 @@ const styles = StyleSheet.create({
   image: {width: '100%', height: '100%', borderRadius: 25},
   iconClick: {
     flex: 0.2,
-    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -106,6 +108,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
   },
+  delete: {paddingRight: 0},
   label: {
     flex: 1,
     fontWeight: 'bold',
@@ -114,9 +117,10 @@ const styles = StyleSheet.create({
   operations: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
+    marginBottom: 10,
   },
   details: {marginHorizontal: 20},
-  eventClick: {padding: 10},
+  eventClick: {padding: 5},
 });
 
 export default Collapsible;
