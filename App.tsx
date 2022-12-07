@@ -20,7 +20,6 @@ const App = () => {
     isModalVisible: false,
     selectedCeleb: null,
   });
-  // Icon.loadFont().then();
 
   const deleteCelebrities = () => {
     let index = celebrities.findIndex(
