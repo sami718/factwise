@@ -1,8 +1,12 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TextInput, Pressable} from 'react-native';
+
+import {getAge} from '../utils/GlobalFunctions';
+import {nameRegex} from '../utils/constant';
+
 import Icon from 'react-native-vector-icons/Octicons';
 import {Dropdown} from 'react-native-element-dropdown';
-import {getAge} from '../utils/GlobalFunctions';
+import Toast from 'react-native-toast-message';
 
 const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
   const [celebToUpdate, setCelebritydata] = useState({
@@ -84,8 +88,22 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
             {borderColor: 'green'},
           ]}
           onPress={() => {
+            if (!nameRegex.test(celebToUpdate.country)) {
+              Toast.show({
+                type: 'info',
+                text1: 'Country name is not valid',
+                position: 'bottom',
+              });
+              return true;
+            }
             EditCelebrities(celebToUpdate);
-            setEditValue(false);
+            if (
+              celebToUpdate.age &&
+              celebToUpdate.country &&
+              celebToUpdate.description
+            ) {
+              setEditValue(false);
+            }
           }}>
           <Icon name="check" size={16} color="green" />
         </Pressable>

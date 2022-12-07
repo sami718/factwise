@@ -41,12 +41,20 @@ const App = () => {
   };
 
   const EditCelebrities = (updatedCelebrityValue: any) => {
-    let index = celebrities.findIndex(
-      (celebrity: any) => celebrity.id === updatedCelebrityValue.id,
-    );
-    celebritiesData[index] = updatedCelebrityValue;
-    setCelebritiesData([...celebritiesData]);
-    showToast('Celebrity Details Updated Successfully!');
+    if (
+      updatedCelebrityValue.age &&
+      updatedCelebrityValue.country &&
+      updatedCelebrityValue.description
+    ) {
+      let index = celebrities.findIndex(
+        (celebrity: any) => celebrity.id === updatedCelebrityValue.id,
+      );
+      celebritiesData[index] = updatedCelebrityValue;
+      setCelebritiesData([...celebritiesData]);
+      showToast('Celebrity Details Updated Successfully!');
+    } else {
+      showToast('Add all required details', 'info');
+    }
   };
 
   const renderItem = ({item}: any) => {
