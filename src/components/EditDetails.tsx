@@ -21,6 +21,12 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
     {label: 'Rather not say', value: 'Rather not say'},
   ];
 
+  const isValueUpdated =
+    JSON.stringify({
+      ...item,
+      age: item.age || getAge(item.dob),
+    }) !== JSON.stringify(celebToUpdate);
+
   return (
     <>
       <View style={styles.screenArea}>
@@ -85,8 +91,9 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
           style={({pressed}) => [
             {opacity: pressed ? 0.5 : 1.0},
             styles.clickButton,
-            {borderColor: 'green'},
+            {borderColor: isValueUpdated ? 'green' : 'grey'},
           ]}
+          disabled={!isValueUpdated}
           onPress={() => {
             if (!nameRegex.test(celebToUpdate.country)) {
               Toast.show({
@@ -105,7 +112,11 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
               setEditValue(false);
             }
           }}>
-          <Icon name="check" size={16} color="green" />
+          <Icon
+            name="check"
+            size={16}
+            color={isValueUpdated ? 'green' : 'grey'}
+          />
         </Pressable>
       </View>
     </>
