@@ -23,7 +23,9 @@ const CelebDetails = ({item}: any) => {
         </View>
       </View>
       <Text style={styles.desc}>Description</Text>
-      <Text>{item.description}</Text>
+      <Text numberOfLines={7} ellipsizeMode={'tail'}>
+        {item.description}
+      </Text>
     </>
   );
 };

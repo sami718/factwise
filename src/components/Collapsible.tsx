@@ -142,7 +142,9 @@ const styles = StyleSheet.create({
   operations: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginBottom: 10,
+    position: 'absolute',
+    top: 200,
+    right: 0,
   },
   details: {marginHorizontal: 20},
   eventClick: {padding: 5},
