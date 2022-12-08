@@ -87,7 +87,7 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
                   } else {
                     Toast.show({
                       type: 'info',
-                      text1: 'Cannot perform the action',
+                      text1: 'Celebrities under 18 cannot be updated',
                       position: 'bottom',
                     });
                   }
