@@ -70,7 +70,7 @@ const App = () => {
       updatedCelebrityValue.country &&
       updatedCelebrityValue.description
     ) {
-      let index = celebrities.findIndex(
+      let index = celebritiesData.findIndex(
         (celebrity: celebrityInterface) =>
           celebrity.id === updatedCelebrityValue.id,
       );
@@ -84,7 +84,7 @@ const App = () => {
   };
 
   const updateIsEditing = (element: celebrityInterface) => {
-    let index = celebrities.findIndex(
+    let index = celebritiesData.findIndex(
       (celebrity: celebrityInterface) => celebrity.id === element.id,
     );
     celebritiesData[index] = element;
