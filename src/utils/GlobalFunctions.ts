@@ -1,4 +1,4 @@
-export const getAge = (birthDateString: any) => {
+export const getAge = (birthDateString: string) => {
   const today = new Date();
   const birthDate = new Date(birthDateString);
 

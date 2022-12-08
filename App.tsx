@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   View,
@@ -7,19 +7,42 @@ import {
   TextInput,
 } from 'react-native';
 import Collapsible from './src/components/Collapsible';
+import DeleteBox from './src/components/DeleteBox';
 
 import celebrities from './src/mockData/celebrities';
-import DeleteBox from './src/components/DeleteBox';
+import {celebrityInterface} from './src/utils/interface';
+
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/EvilIcons';
 
 const App = () => {
-  const [celebritiesData, setCelebritiesData] = useState<any>(celebrities);
+  const [celebritiesData, setCelebritiesData] =
+    useState<Array<celebrityInterface>>(celebrities);
   const [searchText, setSearchText] = useState<string>('');
   const [modalVisible, setModalVisible] = useState({
     isModalVisible: false,
     selectedCeleb: null,
   });
+
+  useEffect(() => {
+    celebritiesData.forEach((element: celebrityInterface) => {
+      element.isExpanded = false;
+      element.isEditing = false;
+    });
+    setCelebritiesData([...celebritiesData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const hideAndShowCelebrity = (celebrityToShow: celebrityInterface) => {
+    celebritiesData.forEach((element: celebrityInterface) => {
+      element.isExpanded = false;
+    });
+    let index = celebritiesData.findIndex(
+      (celebrity: celebrityInterface) => celebrity.id === celebrityToShow.id,
+    );
+    celebritiesData[index] = celebrityToShow;
+    setCelebritiesData([...celebritiesData]);
+  };
 
   const showToast = (message: string, type?: string) => {
     Toast.show({
@@ -32,7 +55,8 @@ const App = () => {
 
   const deleteCelebrities = () => {
     let index = celebritiesData.findIndex(
-      (celebrity: any) => celebrity.id === modalVisible.selectedCeleb.id,
+      (celebrity: celebrityInterface) =>
+        celebrity.id === modalVisible.selectedCeleb.id,
     );
     celebritiesData.splice(index, 1);
     setCelebritiesData([...celebritiesData]);
@@ -40,21 +64,31 @@ const App = () => {
     showToast('Celebrity Details Deleted Successfully!');
   };
 
-  const EditCelebrities = (updatedCelebrityValue: any) => {
+  const EditCelebrities = (updatedCelebrityValue: celebrityInterface) => {
     if (
       updatedCelebrityValue.age &&
       updatedCelebrityValue.country &&
       updatedCelebrityValue.description
     ) {
       let index = celebrities.findIndex(
-        (celebrity: any) => celebrity.id === updatedCelebrityValue.id,
+        (celebrity: celebrityInterface) =>
+          celebrity.id === updatedCelebrityValue.id,
       );
       celebritiesData[index] = updatedCelebrityValue;
+      updatedCelebrityValue.isEditing = false;
       setCelebritiesData([...celebritiesData]);
       showToast('Celebrity Details Updated Successfully!');
     } else {
       showToast('Add all required details', 'info');
     }
+  };
+
+  const updateIsEditing = (element: celebrityInterface) => {
+    let index = celebrities.findIndex(
+      (celebrity: celebrityInterface) => celebrity.id === element.id,
+    );
+    celebritiesData[index] = element;
+    setCelebritiesData([...celebritiesData]);
   };
 
   const renderItem = ({item}: any) => {
@@ -68,7 +102,14 @@ const App = () => {
           setModalVisible={(value: boolean) =>
             setModalVisible({isModalVisible: value, selectedCeleb: item})
           }
-          EditCelebrities={(updatedValue: any) => EditCelebrities(updatedValue)}
+          celebritiesData={celebritiesData}
+          updateIsEditing={(data: celebrityInterface) => updateIsEditing(data)}
+          hideAndShowCelebrity={(data: celebrityInterface) =>
+            hideAndShowCelebrity(data)
+          }
+          EditCelebrities={(updatedValue: celebrityInterface) =>
+            EditCelebrities(updatedValue)
+          }
         />
       );
     }
@@ -94,7 +135,7 @@ const App = () => {
       <FlatList
         data={celebritiesData}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => String(item.id)}
         contentContainerStyle={styles.listView}
       />
       <DeleteBox

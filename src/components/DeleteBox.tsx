@@ -1,7 +1,17 @@
 import React from 'react';
 import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 
-const DeleteBox = ({modalVisible, setModalVisible, deleteCelebrities}: any) => {
+interface DeleteAlertInterface {
+  modalVisible: boolean;
+  setModalVisible: (val: boolean) => void;
+  deleteCelebrities: () => void;
+}
+
+const DeleteBox = ({
+  modalVisible,
+  setModalVisible,
+  deleteCelebrities,
+}: DeleteAlertInterface) => {
   return (
     <View style={modalVisible ? styles.backScreen : {}}>
       <Modal

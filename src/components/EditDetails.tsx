@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/Octicons';
 import {Dropdown} from 'react-native-element-dropdown';
 import Toast from 'react-native-toast-message';
 
-const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
+const EditDetails = ({item, EditCelebrities, updateIsEditing}: any) => {
   const [celebToUpdate, setCelebritydata] = useState({
     ...item,
     age: item.age || getAge(item.dob),
@@ -63,6 +63,7 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
             onChangeText={val =>
               setCelebritydata({...celebToUpdate, country: val})
             }
+            maxLength={18}
             value={celebToUpdate.country}
           />
         </View>
@@ -84,7 +85,10 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
             styles.clickButton,
             {marginRight: 15},
           ]}
-          onPress={() => setEditValue(false)}>
+          onPress={() => {
+            item.isEditing = false;
+            updateIsEditing(item);
+          }}>
           <Icon name="x" size={16} color="red" />
         </Pressable>
         <Pressable
@@ -104,13 +108,6 @@ const EditDetails = ({item, setEditValue, EditCelebrities}: any) => {
               return true;
             }
             EditCelebrities(celebToUpdate);
-            if (
-              celebToUpdate.age &&
-              celebToUpdate.country &&
-              celebToUpdate.description
-            ) {
-              setEditValue(false);
-            }
           }}>
           <Icon
             name="check"

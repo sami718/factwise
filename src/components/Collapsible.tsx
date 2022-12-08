@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -8,26 +8,34 @@ import {
   Animated,
 } from 'react-native';
 
-import Toast from 'react-native-toast-message';
-import Icon from 'react-native-vector-icons/EvilIcons';
-
-import {getAge} from '../utils/GlobalFunctions';
 import CelebDetails from './CelebDetails';
 import EditDetails from './EditDetails';
 
+import {getAge} from '../utils/GlobalFunctions';
+import {celebrityInterface} from '../utils/interface';
+
+import Toast from 'react-native-toast-message';
+import Icon from 'react-native-vector-icons/EvilIcons';
+
 interface Props {
-  item: any;
+  item: celebrityInterface;
   setModalVisible: (value: boolean) => void;
-  EditCelebrities: (data: any) => void;
+  EditCelebrities: (data: celebrityInterface) => void;
+  hideAndShowCelebrity: (data: celebrityInterface) => void;
+  updateIsEditing: (ele: celebrityInterface) => void;
+  celebritiesData: Array<celebrityInterface>;
 }
 
-const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
-  const [isExpanded, setExpandValue] = useState<boolean>(false);
-  const [isEditing, setEditValue] = useState<boolean>(false);
-
-  const [animation, setAnimation] = useState<any>(new Animated.Value(65));
+const Collapsible = ({
+  item,
+  setModalVisible,
+  EditCelebrities,
+  hideAndShowCelebrity,
+  celebritiesData,
+  updateIsEditing,
+}: Props) => {
   const boxStyle = {
-    height: animation,
+    height: new Animated.Value(item.isExpanded ? 310 : 65),
   };
   return (
     <Animated.View style={[styles.container, boxStyle]}>
@@ -44,33 +52,33 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
         <TouchableOpacity
           style={styles.iconClick}
           onPress={() => {
-            if (!isExpanded) {
-              setAnimation(new Animated.Value(320));
-              setExpandValue(!isExpanded);
-            } else {
-              setAnimation(new Animated.Value(65));
-              setExpandValue(!isExpanded);
+            if (celebritiesData.every(ele => ele.isEditing === false)) {
+              hideAndShowCelebrity({...item, isExpanded: !item.isExpanded});
             }
           }}>
           <Icon
-            name={isExpanded ? 'chevron-up' : 'chevron-down'}
+            name={item.isExpanded ? 'chevron-up' : 'chevron-down'}
             size={35}
             color={'black'}
           />
         </TouchableOpacity>
       </View>
-      {isExpanded && (
+      {item.isExpanded && (
         <View style={styles.details}>
-          {!isEditing ? (
+          {!item.isEditing ? (
             <CelebDetails item={item} />
           ) : (
             <EditDetails
-              EditCelebrities={(data: any) => EditCelebrities(data)}
-              setEditValue={(value: boolean) => setEditValue(value)}
+              EditCelebrities={(data: celebrityInterface) =>
+                EditCelebrities(data)
+              }
+              updateIsEditing={(celElement: celebrityInterface) =>
+                updateIsEditing(celElement)
+              }
               item={item}
             />
           )}
-          {!isEditing && (
+          {!item.isEditing && (
             <View style={styles.operations}>
               <TouchableOpacity
                 style={[styles.eventClick, styles.delete]}
@@ -81,9 +89,10 @@ const Collapsible = ({item, setModalVisible, EditCelebrities}: Props) => {
                 style={styles.eventClick}
                 onPress={() => {
                   if (
-                    item.age ? Number(item.age) > 18 : getAge(item.dob) > 18
+                    item.age ? Number(item.age) >= 18 : getAge(item.dob) >= 18
                   ) {
-                    setEditValue(true);
+                    item.isEditing = true;
+                    updateIsEditing(item);
                   } else {
                     Toast.show({
                       type: 'info',
