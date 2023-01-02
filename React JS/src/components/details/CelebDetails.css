@@ -1,0 +1,41 @@
+.screenArea{
+  display: flex;
+  flex: 1;
+  flex-direction: 'row';
+  justify-content: 'space-between';
+}
+
+.celebrityBlock{
+  width: 500px;
+  padding: 10px;
+  margin-bottom: 20;
+}
+
+.label {
+  font-size: 14;
+}
+
+.details {
+  color: rgba(131, 131, 138, 1);
+}
+
+.value{
+  font-size: 16;
+  margin-top: -10px;
+}
+
+.desc{
+  font-size: 15;
+  color: '#36454F';
+  margin-top: 5;
+  margin-bottom: 5;
+  align-self: flex-start;
+}
+
+.block{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
